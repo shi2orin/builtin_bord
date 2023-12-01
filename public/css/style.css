@@ -4,3 +4,13 @@ ul,
 li {
   list-style: none;
 }
+
+.container {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.post_category {
+  background-color: #add8e6;
+
+}

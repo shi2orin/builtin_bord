@@ -12,4 +12,9 @@ class PostFavorite extends Model
         'user_id',
         'post__id',
     ];
+
+    public function favoriteCounts($post_id)
+    {
+        return PostFavorite::where('post_id', $post_id)->get()->count();
+    }
 }

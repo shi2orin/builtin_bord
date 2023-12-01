@@ -17,4 +17,30 @@ class Post extends Model
         'post',
         'event_at',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\Users\User');
+    }
+
+    public function postComments()
+    {
+        return $this->hasMany('App\Models\Posts\PostComment');
+    }
+    public function Favorites()
+    {
+        return $this->hasMany('App\Models\Posts\PostFavorite');
+    }
+
+    public function subCategory()
+    {
+        return $this->belongsTo('App\Models\Posts\PostSubCategory', 'post_sub_category_id');
+    }
+
+
+    // コメント数
+    public function commentCounts($post_id)
+    {
+        return PostComment::where('post_id', $post_id)->get()->count();
+    }
 }

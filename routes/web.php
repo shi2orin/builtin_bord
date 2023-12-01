@@ -21,11 +21,10 @@ Route::group(['middleware' => ['guest']], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::namespace('Authenticated')->group(function () {
-        Route::get('/top', 'LoginController@top')->name('top.show');
-        Route::get('/logout', 'LoginController@logout');
-    });
+    Route::get('/top', 'User\Post\PostsController@top')->name('top.show');
+    Route::get('/logout', 'HomeController@logout')->name('logout');
 });
+
 
 
 // フレームワークの認証機能削除

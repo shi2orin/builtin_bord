@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/index';
+    protected $redirectTo = '/top';
 
     /**
      * Create a new controller instance.
@@ -53,18 +53,5 @@ class LoginController extends Controller
         } else {
             return redirect('/login');
         }
-    }
-
-
-    public function top()
-    {
-        return view('home');
-    }
-
-
-    public function logout()
-    {
-        Auth::logout();
-        return redirect()->route('loginView');
     }
 }
