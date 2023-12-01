@@ -29,5 +29,46 @@
     </div>
     @endforeach
   </div>
-</div>
-@endsection
+  <div class="other_area w-25 mr-5">
+    <div class="m-4">
+      <a class="btn btn-primary w-100 mb-4" href="{{ route('loginView') }}" role="button">投稿</a>
+      <div class="d-flex mb-4">
+        <input type="text" class="w-75 category_search" placeholder="キーワードを検索" name="keyword" form="postSearchRequest">
+        <input type="submit" class="w-25 btn btn-primary " value="検索" form="postSearchRequest">
+      </div>
+      <input type="submit" name="like_posts" class="btn btn-primary w-100 mb-4" value="いいねした投稿" form="postSearchRequest">
+      <input type="submit" name="my_posts" class="btn btn-primary w-100 mb-4" value="自分の投稿" form="postSearchRequest">
+      <div>
+        <p>カテゴリ-</p>
+        <div class="category">
+
+          @foreach($main_categories as $main_category)
+          <div class="category_item">
+            <p class="main_category js-main_category border-bottom border-secondary">
+              {{ $main_category->main_category }}
+            </p>
+            <!--/.accordion-title-->
+            <div class="sub_category">
+              <ul>
+                @foreach($sub_categories->where('main_category_id', $main_category->id) as $sub_category)
+                <li class="border-bottom border-secondary pt-3"><input type="submit" name="category_word" value="{{ $sub_category->sub_category }}" form="postSearchRequest" style="border:none;">
+                </li>
+                @endforeach
+              </ul>
+            </div>
+            <!--/.accordion-content sub_category-->
+          </div>
+          @endforeach
+          <!--/.accordion-item main_category-->
+
+          <!--/.accordion-container消した-->
+        </div>
+        <!--/.accordionはcategory-->
+
+        <form action="{{ route('top.show') }}" method="get" id="postSearchRequest"></form>
+      </div>
+      <!-- otherareaのやつ -->
+      <!-- bordareaのやつ -->
+    </div>
+  </div>
+  @endsection

@@ -49,7 +49,7 @@ class LoginController extends Controller
     {
         $data = $request->only('email', 'password');
         if (Auth::attempt($data)) {
-            return redirect('/top');
+            return redirect()->route('top.show');;
         } else {
             return redirect('/login');
         }

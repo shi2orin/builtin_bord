@@ -21,8 +21,8 @@ Route::group(['middleware' => ['guest']], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/top', 'User\Post\PostsController@top')->name('top.show');
     Route::get('/logout', 'HomeController@logout')->name('logout');
+    Route::get('/posts/{keyword?}', 'User\Post\PostsController@show')->name('top.show');
 });
 
 
