@@ -22,8 +22,18 @@ class PostComment extends Model
         return $this->belongsTo('App\Models\Posts\Post');
     }
 
+    public function user()
+    {
+        return $this->belongTo('App\Models\Users\User');
+    }
+
     public function commentUser($user_id)
     {
         return User::where('id', $user_id)->first();
+    }
+
+    public function favoriteComments()
+    {
+        return $this->hasMany('App\Models\Posts\PostCommentFavorite');
     }
 }

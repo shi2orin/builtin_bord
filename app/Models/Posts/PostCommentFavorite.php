@@ -12,4 +12,9 @@ class PostCommentFavorite extends Model
         'user_id',
         'post_comment_id',
     ];
+
+    public function favoriteCommentCounts($post_comment_id)
+    {
+        return PostCommentFavorite::where('post_comment_id', $post_comment_id)->get()->count();
+    }
 }

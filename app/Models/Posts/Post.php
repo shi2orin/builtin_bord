@@ -27,16 +27,20 @@ class Post extends Model
     {
         return $this->hasMany('App\Models\Posts\PostComment');
     }
-    public function Favorites()
+    public function favorites()
     {
         return $this->hasMany('App\Models\Posts\PostFavorite');
     }
 
-    public function subCategory()
+    public function subCategories()
     {
         return $this->belongsTo('App\Models\Posts\PostSubCategory', 'post_sub_category_id');
     }
 
+    public function actionLogs()
+    {
+        return $this->hasMany('App\Models\ActionLogs\ActionLog');
+    }
 
     // コメント数
     public function commentCounts($post_id)

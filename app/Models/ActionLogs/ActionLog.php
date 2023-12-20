@@ -13,4 +13,17 @@ class ActionLog extends Model
         'post_id',
         'event_at',
     ];
+    public function post()
+    {
+        return $this->belongTo('App\Models\Posts\Post');
+    }
+    public function user()
+    {
+        return $this->belongTo('App\Models\Users\User');
+    }
+
+    public function viewCounts($post_id)
+    {
+        return ActionLog::where('post_id', $post_id)->get()->count();
+    }
 }
