@@ -9,13 +9,14 @@
     </div>
     <div>
       @if (Auth::user()->id ==$post->user_id)
-      <a class="btn btn-primary" href="{{ route('post.edit.show', ['id' => $post->id]) }}" role="button">編集</a>
+      <a class="btn btn-danger" href="{{ route('post.edit.show', ['id' => $post->id]) }}" role="button">編集</a>
       @endif
     </div>
     <p class="ml-4">
     <p class="pr-3">{{$view->viewCounts($post->id)}}View</p>
   </div>
   <h5 class="py-3">{{ $post->title }}</h5>
+  <p class="pl-3 pb-3">{{$post->post}}</p>
   <div class="d-flex justify-content-between">
     <div class="flex-grow-1">
       <div class="btn btn-primary">{{$post->subCategories->sub_category}}</div>
@@ -38,7 +39,7 @@
       <p class="ml-3">{{ $comment->created_at}}</p>
       <div class="ml-auto">
         @if (Auth::user()->id ==$comment->user_id)
-        <a class="btn btn-primary" href="{{ route('comment.edit.show', ['id' => $comment->id]) }}" role="button">編集</a>
+        <a class="btn btn-danger" href="{{ route('comment.edit.show', ['id' => $comment->id]) }}" role="button">編集</a>
         @endif
       </div>
     </div>

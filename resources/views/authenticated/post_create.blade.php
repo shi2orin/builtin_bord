@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','投稿編集画面')
+@section('title','新規投稿画面')
 @section('content')
 
 <form action="{{ route('post.create') }}" method="post" id="postCreate">{{ csrf_field() }}

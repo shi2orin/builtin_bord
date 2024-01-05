@@ -29,8 +29,8 @@ class PostsController extends Controller
         $post_comment = new Post;
         if (!empty($request->keyword)) {
             $posts = Post::with('user', 'postComments', 'subCategories')
-                ->where('title', 'favorite', '%' . $request->keyword . '%')
-                ->orWhere('post', 'favorite', '%' . $request->keyword . '%')
+                ->where('title', 'like', '%' . $request->keyword . '%')
+                ->orWhere('post', 'like', '%' . $request->keyword . '%')
                 ->orWhereHas('subCategories', function ($q) use ($request) {
                     $q->where('sub_category', $request->keyword);
                 })
@@ -66,25 +66,50 @@ class PostsController extends Controller
         return view('authenticated.post_detail', compact('post', 'favorite', 'favorite_comment', 'view'));
     }
 
-    public function commentCreate(Request $request)
+    public function newPost()
     {
-        $request->validate(
-            [
-                'comment' => ['required', 'string', 'max:2500']
-            ],
-            [
-                'comment.required' => '※コメント内容は必須です。',
-                'comment.max' => '※コメントは2500文字以内で記入してください。',
-            ]
-        );
+        $main_categories = PostMainCategory::get();
+        $sub_categories = PostSubCategory::get();
+        return view('authenticated.post_create', compact('main_categories', 'sub_categories'));
+    }
 
-        PostComment::create([
-            'post_id' => $request->post_id,
+    public function postCreate(PostFormRequest $request)
+    {
+
+        $sub_category_id = $request->sub_category;
+        Post::create([
             'user_id' => Auth::id(),
-            'comment' => $request->comment,
+            'post_sub_category_id' => $sub_category_id,
+            'title' => $request->title,
+            'post' => $request->post_body,
             'event_at' => now()
         ]);
+
+        return redirect()->route('top.show');
+    }
+
+    public function postEditShow($post_id)
+    {
+        $post = Post::with('user', 'subCategories')->findOrFail($post_id);
+        $main_categories = PostMainCategory::get();
+        $sub_categories = PostSubCategory::get();
+        return view('authenticated.post_edit', compact('post', 'main_categories', 'sub_categories'));
+    }
+
+    public function postEdit(PostFormRequest $request)
+    {
+
+        Post::where('id', $request->post_id)->update([
+            'title' => $request->title,
+            'post' => $request->post_body,
+        ]);
         return redirect()->route('post.detail', ['id' => $request->post_id]);
+    }
+
+    public function postDelete($id)
+    {
+        Post::where('id', $id)->delete();
+        return redirect()->route('top.show');
     }
 
     public function postFavorite(Request $request)
@@ -140,51 +165,5 @@ class PostsController extends Controller
             ->delete();
 
         return response()->json();
-    }
-
-    public function newPost()
-    {
-        $main_categories = PostMainCategory::get();
-        $sub_categories = PostSubCategory::get();
-        return view('authenticated.post_create', compact('main_categories', 'sub_categories'));
-    }
-
-    public function postCreate(PostFormRequest $request)
-    {
-
-        $sub_category_id = $request->sub_category;
-        Post::create([
-            'user_id' => Auth::id(),
-            'post_sub_category_id' => $sub_category_id,
-            'title' => $request->title,
-            'post' => $request->post_body,
-            'event_at' => now()
-        ]);
-
-        return redirect()->route('top.show');
-    }
-
-    public function postEditShow($post_id)
-    {
-        $post = Post::with('user', 'subCategories')->findOrFail($post_id);
-        $main_categories = PostMainCategory::get();
-        $sub_categories = PostSubCategory::get();
-        return view('authenticated.post_edit', compact('post', 'main_categories', 'sub_categories'));
-    }
-
-    public function postEdit(PostFormRequest $request)
-    {
-
-        Post::where('id', $request->post_id)->update([
-            'title' => $request->title,
-            'post' => $request->post_body,
-        ]);
-        return redirect()->route('post.detail', ['id' => $request->post_id]);
-    }
-
-    public function postDelete($id)
-    {
-        Post::where('id', $id)->delete();
-        return redirect()->route('top.show');
     }
 }

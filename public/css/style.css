@@ -10,6 +10,11 @@ li {
   margin: 50px 0px;
 }
 
+.vertical-align {
+  display: flex;
+  align-items: center;
+}
+
 .error_message {
   color: #e54747;
 }

@@ -30,6 +30,11 @@ class PostMainCategoriesController extends Controller
         PostMainCategory::create(['main_category' => $request->main_category]);
         return redirect()->route('category.show');
     }
+    public function mainCategoryDelete($id)
+    {
+        PostMainCategory::where('id', $id)->delete();
+        return redirect()->route('category.show');
+    }
     public function subCategoryCreate(Request $request)
     {
         $request->validate(

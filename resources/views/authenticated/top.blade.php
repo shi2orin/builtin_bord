@@ -32,7 +32,7 @@
   <div class="other_area w-25 mr-5">
     <div class="">
       @if(Auth::user()->admin_role ==1)
-      <a class="btn btn-primary w-100 mb-4" href="{{ route('category.show') }}" role="button">カテゴリー追加</a>
+      <a class="btn btn-danger w-100 mb-4" href="{{ route('category.show') }}" role="button">カテゴリー追加</a>
       @endif
       <a class="btn btn-primary w-100 mb-4" href="{{ route('post.new') }}" role="button">投稿</a>
       <form action="{{ route('top.show') }}" method="get" id="postSearchRequest">
